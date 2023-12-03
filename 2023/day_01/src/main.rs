@@ -3,8 +3,8 @@ use std::io::BufReader;
 use std::io::Seek;
 use std::io::SeekFrom;
 
-use day_one::part_one;
-use day_one::part_two;
+use day_01::part_one;
+use day_01::part_two;
 
 fn main() {
     let mut reader: BufReader<File> = BufReader::new(File::open("./input/input.txt").unwrap());
