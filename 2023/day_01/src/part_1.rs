@@ -17,7 +17,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_it_works() {
-        assert_eq!(solve(include_str!("../input/input.txt")), 54953);
+    fn test_input() {
+        assert_eq!(solve(include_str!("../data/input.txt")), 54953);
+    }
+
+    #[test]
+    fn test_example() {
+        assert_eq!(solve(include_str!("../data/example_1.txt")), 142);
     }
 }

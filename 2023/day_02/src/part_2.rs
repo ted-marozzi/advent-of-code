@@ -34,7 +34,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_part_two() {
-        assert_eq!(solve(include_str!("../input/input.txt")), 63307);
+    fn test_input() {
+        assert_eq!(solve(include_str!("../data/input.txt")), 63307);
+    }
+
+    #[test]
+    fn test_example() {
+        assert_eq!(solve(include_str!("../data/example_2.txt")), 2286);
     }
 }
