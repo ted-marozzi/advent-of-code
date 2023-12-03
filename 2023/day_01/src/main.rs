@@ -1,17 +1,8 @@
-use std::fs::File;
-use std::io::BufReader;
-use std::io::Seek;
-use std::io::SeekFrom;
-
-use day_01::part_one;
-use day_01::part_two;
+use day_01::part_1;
+use day_01::part_2;
 
 fn main() {
-    let mut reader: BufReader<File> = BufReader::new(File::open("./input/input.txt").unwrap());
-
-    println!("Part one: {}", part_one::solve(&mut reader));
-
-    reader.seek(SeekFrom::Start(0)).unwrap();
-
-    println!("Part two: {}", part_two::solve(&mut reader));
+    let input = include_str!("../input/input.txt");
+    println!("Part one: {}", part_1::solve(&input));
+    println!("Part two: {}", part_2::solve(&input));
 }

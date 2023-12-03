@@ -1,22 +1,15 @@
-use std::{
-    fs::File,
-    io::{BufRead, BufReader},
-};
-
 use regex::Regex;
 
-pub fn solve(reader: &mut BufReader<File>) -> i32 {
+pub fn solve(input: &str) -> i32 {
     let red_count_ex = Regex::new(r"(\d+) red").unwrap();
     let green_count_ex = Regex::new(r"(\d+) green").unwrap();
     let blue_count_ex = Regex::new(r"(\d+) blue").unwrap();
 
     let mut result = 0;
-    for maybe_line in reader.lines() {
-        if let Ok(line) = maybe_line {
-            result += get_minimum_count(&red_count_ex, &line)
-                * get_minimum_count(&green_count_ex, &line)
-                * get_minimum_count(&blue_count_ex, &line);
-        }
+    for line in input.split("\n") {
+        result += get_minimum_count(&red_count_ex, &line)
+            * get_minimum_count(&green_count_ex, &line)
+            * get_minimum_count(&blue_count_ex, &line);
     }
 
     result
@@ -42,8 +35,6 @@ mod tests {
 
     #[test]
     fn test_part_two() {
-        let mut reader: BufReader<File> = BufReader::new(File::open("./input/input.txt").unwrap());
-
-        assert_eq!(solve(&mut reader), 63307);
+        assert_eq!(solve(include_str!("../input/input.txt")), 63307);
     }
 }

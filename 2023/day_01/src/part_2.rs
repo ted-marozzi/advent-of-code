@@ -1,19 +1,12 @@
-use std::{
-    fs::File,
-    io::{BufRead, BufReader},
-};
-
 use crate::parse_two_digits;
 
-pub fn solve(reader: &mut BufReader<File>) -> i32 {
+pub fn solve(input: &str) -> i32 {
     let mut result = 0;
 
-    for maybe_line in reader.lines() {
-        if let Ok(line) = maybe_line {
-            result += parse_two_digits(&find_first_real_digit(&line), &find_last_real_digit(&line));
-        }
+    for line in input.split("\n").into_iter() {
+        result += parse_two_digits(&find_first_real_digit(&line), &find_last_real_digit(&line));
     }
-    return result;
+    result
 }
 
 fn find_first_real_digit(line: &str) -> char {
@@ -82,12 +75,9 @@ fn parse_real_digit(str: &str) -> Option<char> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::{fs::File, io::BufReader};
 
     #[test]
-    fn test_part_two() {
-        let mut reader: BufReader<File> = BufReader::new(File::open("./input/input.txt").unwrap());
-
-        assert_eq!(solve(&mut reader), 53868);
+    fn test_it_works() {
+        assert_eq!(solve(include_str!("../input/input.txt")), 53868);
     }
 }
