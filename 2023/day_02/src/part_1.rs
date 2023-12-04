@@ -31,12 +31,12 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_input() {
-        assert_eq!(solve(include_str!("../data/input.txt")), 2416);
+    fn test_example() {
+        assert_eq!(solve(include_str!("../data/example_1.txt")), 8);
     }
 
     #[test]
-    fn test_example() {
-        assert_eq!(solve(include_str!("../data/example_1.txt")), 8);
+    fn test_input() {
+        assert_eq!(solve(include_str!("../data/input.txt")), 2416);
     }
 }
