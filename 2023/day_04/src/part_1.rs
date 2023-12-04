@@ -1,30 +1,17 @@
+use crate::CachedWinningNumbers;
+
 pub fn solve(input: &str) -> i32 {
     let mut result = 0;
 
+    let mut winning_numbers = CachedWinningNumbers::new();
+
     for line in input.split("\n") {
-        let mut numbers_iter = line.split(": ").last().unwrap().split(" | ");
+        let winning_numbers_count = winning_numbers.count(line);
 
-        let winning_cards = numbers_iter
-            .next()
-            .unwrap()
-            .split(" ")
-            .filter(|num| !num.trim().is_empty())
-            .map(|num| num.trim().parse::<i32>().unwrap())
-            .collect::<Vec<_>>();
-
-        let my_winning_cards_count = numbers_iter
-            .next()
-            .unwrap()
-            .split(" ")
-            .filter(|num| !num.trim().is_empty())
-            .map(|num| num.trim().parse::<i32>().unwrap())
-            .filter(|num| winning_cards.contains(num))
-            .count();
-
-        result += match my_winning_cards_count {
+        result += match winning_numbers_count {
             0 => 0,
             1 => 1,
-            _ => 2_i32.pow((my_winning_cards_count - 1).try_into().unwrap()),
+            _ => 2_i32.pow((winning_numbers_count - 1).try_into().unwrap()),
         };
     }
 
