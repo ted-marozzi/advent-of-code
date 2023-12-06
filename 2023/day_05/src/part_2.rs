@@ -26,8 +26,6 @@ pub fn solve(input: &str) -> i64 {
         let seed_start = chunk.next().unwrap();
         let range = chunk.next().unwrap();
 
-        dbg!(range);
-
         let maybe_min_location: Arc<Mutex<Option<i64>>> = Arc::clone(&maybe_min_location);
         let seed_to_soil_values = MapRanges::new(lines.get(1).unwrap());
         let soil_to_fertilizer = MapRanges::new(lines.get(2).unwrap());
@@ -40,12 +38,6 @@ pub fn solve(input: &str) -> i64 {
         let handle = thread::spawn(move || {
             let min_location_in_range = (seed_start..seed_start + range)
                 .map(|seed| {
-                    if seed % 100000000 == 0 {
-                        let percentage_complete = (((seed - seed_start) as f64 / range as f64)
-                            * 100 as f64)
-                            .round() as i64;
-                        dbg!(percentage_complete);
-                    }
                     humidity_to_location.clone().map(
                         temperature_to_humidity.clone().map(
                             light_to_temperature.clone().map(
