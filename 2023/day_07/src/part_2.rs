@@ -146,15 +146,18 @@ impl Type {
 
         let (max_count_card, max_count) = values.pop().unwrap();
 
+        let max_count_card = *max_count_card;
+        let max_count = *max_count;
+
         let second_max_count = values
             .pop()
             .and_then(|(_, count)| Some(count))
             .unwrap_or(&0);
 
-        let max_count = if *max_count_card != Card::Joker {
-            cards_count.get(&Card::Joker).unwrap_or(&0) + max_count
+        let max_count = if max_count_card == Card::Joker {
+            max_count + second_max_count
         } else {
-            *max_count + second_max_count
+            cards_count.get(&Card::Joker).unwrap_or(&0) + max_count
         };
 
         match (max_count, second_max_count) {
