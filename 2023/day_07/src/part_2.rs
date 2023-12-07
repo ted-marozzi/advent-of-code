@@ -135,29 +135,31 @@ enum Type {
 
 impl Type {
     pub fn from(cards: &Vec<Card>) -> Type {
-        let mut cards_count = HashMap::<Card, i64>::new();
+        let mut cards_count = HashMap::<&Card, i64>::new();
+
         for card in cards {
             let count = cards_count.get(&card).unwrap_or(&0);
-            cards_count.insert(*card, count + 1);
+            cards_count.insert(card, count + 1);
         }
 
-        let mut values = cards_count.iter().collect::<Vec<_>>();
-        values.sort_by(|(_, count_a), (_, count_b)| count_a.cmp(count_b));
+        let joker_count = *cards_count.get(&Card::Joker).unwrap_or(&0);
 
-        let (max_count_card, max_count) = values.pop().unwrap();
+        let mut cards_count: Vec<(&&Card, &i64)> = cards_count.iter().collect::<Vec<_>>();
+        cards_count.sort_by(|(_, count_a), (_, count_b)| count_a.cmp(count_b));
 
-        let max_count_card = *max_count_card;
-        let max_count = *max_count;
+        let max_card_count = cards_count.pop().unwrap();
 
-        let second_max_count = values
+        let max_count_card = *max_card_count.0;
+        let max_count = *max_card_count.1;
+
+        let second_max_count = cards_count
             .pop()
             .and_then(|(_, count)| Some(count))
             .unwrap_or(&0);
 
-        let max_count = if max_count_card == Card::Joker {
-            max_count + second_max_count
-        } else {
-            cards_count.get(&Card::Joker).unwrap_or(&0) + max_count
+        let max_count = match (max_count_card, joker_count) {
+            (Card::Joker, _) => max_count + second_max_count,
+            _ => max_count + joker_count,
         };
 
         match (max_count, second_max_count) {
